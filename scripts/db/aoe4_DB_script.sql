@@ -19,8 +19,8 @@
     civ_id integer,
     unit_id integer,
     primary key (civ_id, unit_id),
-    foreign key(civ_id) references civilizations(civ_id),
-	foreign key(unit_id) references units(id)
+    foreign key(civ_id) references civilizations(civ_id) on delete cascade,
+	foreign key(unit_id) references units(id) on delete cascade
     );
     
 	-- which units counter enemy well
@@ -28,8 +28,8 @@
     unit_id integer,
     enemy_id integer,
     primary key (unit_id, enemy_id),
-    foreign key (unit_id) references units(id),
-    foreign key (enemy_id) references units(id)
+    foreign key (unit_id) references units(id) on delete cascade,
+    foreign key (enemy_id) references units(id) on delete cascade
     );
     
     -- counter to that unit (weak against)
@@ -37,6 +37,6 @@
     unit_id integer,
     enemy_id integer,
     primary key (unit_id, enemy_id),
-    foreign key (unit_id) references units(id),
-    foreign key (enemy_id) references units(id)
+    foreign key (unit_id) references units(id) on delete cascade,
+    foreign key (enemy_id) references units(id) on delete cascade
     );
