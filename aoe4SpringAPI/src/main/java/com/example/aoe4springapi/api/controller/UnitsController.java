@@ -1,9 +1,6 @@
 package com.example.aoe4springapi.api.controller;
 
-import com.example.aoe4springapi.api.model.Civilization;
-import com.example.aoe4springapi.api.model.StrongAgainst;
-import com.example.aoe4springapi.api.model.Unit;
-import com.example.aoe4springapi.api.model.WeakAgainst;
+import com.example.aoe4springapi.api.model.*;
 import com.example.aoe4springapi.service.UnitsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,4 +55,14 @@ public class UnitsController {
         }
         return null;
         }
+
+    @GetMapping("civilizationsunits")
+    public CivilizationsUnits getCivilizationUnits(@RequestParam Integer id ){
+        Optional<CivilizationsUnits> civilizationUnits = unitsService.getCivilizationsUnits(id);
+        if(civilizationUnits.isPresent()){
+            return (CivilizationsUnits) civilizationUnits.get();
+        }
+        return null;
     }
+    }
+
