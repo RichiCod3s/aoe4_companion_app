@@ -13,14 +13,12 @@ public class UnitsService {
 
     private List<ConcreteUnit> unitList;
     private List<Civilization> civilizationList;
-    private List<CivilizationsUnits> civilizationsUnitsList;
+
 
     public UnitsService() {
         unitList = new ArrayList<>();
         civilizationList  = new ArrayList<>();
-        strongAgainstList = new ArrayList<>();
-        weakAgainstList = new ArrayList<>();
-        civilizationsUnitsList = new ArrayList<>();
+
 
         //Initialize Units
         ConcreteUnit spearman = new ConcreteUnit(1, "Spearman", "Infantry", "Light", "Melee");
@@ -39,13 +37,6 @@ public class UnitsService {
 
         civilizationList.addAll(Arrays.asList(abbasidDynasty, ayyubids, byzantines,chinese));
 
-        // Initialize CivilizationUnits - links civ to unit type
-        // spearman example
-        CivilizationsUnits s1 = new CivilizationsUnits(1,1);
-        CivilizationsUnits s2 = new CivilizationsUnits(2,1);
-        CivilizationsUnits s3 = new CivilizationsUnits(4,1);
-
-        civilizationsUnitsList = Arrays.asList(s1, s2, s3);
     }
 
     public Optional<ConcreteUnit> getUnit(Integer id) {
@@ -70,16 +61,7 @@ public class UnitsService {
         return optional;
     }
 
-    public Optional<CivilizationsUnits> getCivilizationsUnits(Integer id) {
-        Optional<CivilizationsUnits> optional = Optional.empty();
-        for (CivilizationsUnits civsUnits : civilizationsUnitsList) {
-            if (id == civsUnits.getCivId()){
-                optional = Optional.of(civsUnits);
-                return optional;
-            }
-        }
-        return optional;
-    }
+
 }
 
 

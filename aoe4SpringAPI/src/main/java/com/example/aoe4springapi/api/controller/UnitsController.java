@@ -38,14 +38,5 @@ public class UnitsController {
         return null;
     }
 
-
-    @GetMapping("civilizationsunits")
-    public CivilizationsUnits getCivilizationUnits(@RequestParam Integer id ){
-        Optional<CivilizationsUnits> civilizationUnits = unitsService.getCivilizationsUnits(id);
-        if(civilizationUnits.isPresent()){
-            return (CivilizationsUnits) civilizationUnits.get();
-        }
-        return null;
-    }
     }
 
