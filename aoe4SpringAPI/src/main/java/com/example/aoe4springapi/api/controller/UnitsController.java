@@ -21,10 +21,10 @@ public class UnitsController {
 
 
     @GetMapping("/unit")
-    public Unit getUnit(@RequestParam Integer id){
-        Optional<Unit> unit = unitsService.getUnit(id);
+    public ConcreteUnit getUnit(@RequestParam Integer id){
+        Optional<ConcreteUnit> unit = unitsService.getUnit(id);
         if(unit.isPresent()){
-            return (Unit) unit.get();
+            return (ConcreteUnit) unit.get();
         }
         return null;
     }
@@ -38,23 +38,6 @@ public class UnitsController {
         return null;
     }
 
-    @GetMapping("strongagainst")
-    public StrongAgainst getStrongagainst(@RequestParam Integer id){
-        Optional<StrongAgainst> strongAgainst = unitsService.getStrongAgainst(id);
-        if(strongAgainst.isPresent()){
-            return (StrongAgainst) strongAgainst.get();
-        }
-        return null;
-        }
-
-        @GetMapping("weakagainst")
-    public WeakAgainst getWeakagainst(@RequestParam Integer id){
-        Optional<WeakAgainst> weakAgainst = unitsService.getWeakAgainst(id);
-        if(weakAgainst.isPresent()){
-            return (WeakAgainst) weakAgainst.get();
-        }
-        return null;
-        }
 
     @GetMapping("civilizationsunits")
     public CivilizationsUnits getCivilizationUnits(@RequestParam Integer id ){

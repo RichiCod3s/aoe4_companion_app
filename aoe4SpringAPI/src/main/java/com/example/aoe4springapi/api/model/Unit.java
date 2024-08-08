@@ -1,10 +1,10 @@
 package com.example.aoe4springapi.api.model;
 
-public class Unit {
+public abstract class Unit {
     private int id;
     private String unitName;
-    private String unitType; // infantry, cavalry, seige
-    private String armourType; // light, heavy, null(seige)
+    private String unitType; // infantry, cavalry, siege
+    private String armourType; // light, heavy, null (siege)
     private String attackType; // melee, ranged
 
     public Unit(int id, String unitName, String unitType, String armourType, String attackType) {
@@ -54,5 +54,6 @@ public class Unit {
     public void setAttackType(String attackType) {
         this.attackType = attackType;
     }
-}
 
+
+}
