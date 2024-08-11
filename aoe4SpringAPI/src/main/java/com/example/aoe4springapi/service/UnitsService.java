@@ -1,66 +1,41 @@
 package com.example.aoe4springapi.service;
 
 import com.example.aoe4springapi.api.model.*;
+import com.example.aoe4springapi.dao.UnitRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UnitsService {
 
-    private List<ConcreteUnit> unitList;
-    private List<Civilization> civilizationList;
 
+    private final UnitRepository unitRepository;
 
-    public UnitsService() {
-        unitList = new ArrayList<>();
-        civilizationList  = new ArrayList<>();
-
-
-        //Initialize Units
-        ConcreteUnit spearman = new ConcreteUnit(1, "Spearman", "Infantry", "Light", "Melee");
-        ConcreteUnit archer = new ConcreteUnit(2, "Archer", "Infantry", "Light", "Ranged");
-        ConcreteUnit horseman = new ConcreteUnit(3, "Horseman", "Cavalry", "Light", "Melee");
-        ConcreteUnit springald = new ConcreteUnit(4, "Springald", "Siege", null, "Ranged");
-
-        unitList.addAll(Arrays.asList(spearman, archer, horseman, springald));
-
-        //Initialize Civilizations
-
-        Civilization abbasidDynasty = new Civilization(1, "Abbasid Dynasty");
-        Civilization ayyubids = new Civilization(2, "Ayyubids");
-        Civilization byzantines = new Civilization(3, "Byzantines");
-        Civilization chinese = new Civilization(4, "Chinese");
-
-        civilizationList.addAll(Arrays.asList(abbasidDynasty, ayyubids, byzantines,chinese));
-
+    public UnitsService(UnitRepository unitRepository) {
+    this.unitRepository = unitRepository;
     }
 
-    public Optional<ConcreteUnit> getUnit(Integer id) {
-        Optional<ConcreteUnit> optional = Optional.empty();
-        for (ConcreteUnit unit : unitList) {
-            if (id== unit.getId()) {
-                optional = Optional.of(unit);
-                return optional;
-            }
-        }
-        return optional;
+    public List<ConcreteUnit> listAllUnits() {
+        return unitRepository.list();
     }
 
-    public Optional<Civilization> getCivilization(Integer id) {
-        Optional<Civilization> optional = Optional.empty();
-        for (Civilization civilization : civilizationList) {
-            if(id == civilization.getCivId()){
-                optional = Optional.of(civilization);
-                return optional;
-            }
-        }
-        return optional;
+    public Optional<ConcreteUnit> getUnit(int id) {
+       return unitRepository.get(id);
     }
 
+    public void createUnit(ConcreteUnit unit) {
+        unitRepository.create(unit);
+    }
+
+    public void updateUnit(ConcreteUnit unit, int id) {
+        unitRepository.update(unit, id);
+    }
+    public void deleteUnit(int id) {
+        unitRepository.delete(id);
+    }
 
 }
 

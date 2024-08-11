@@ -19,7 +19,6 @@ public class UnitsController {
         this.unitsService = unitsService;
     }
 
-
     @GetMapping("/unit")
     public ConcreteUnit getUnit(@RequestParam Integer id){
         Optional<ConcreteUnit> unit = unitsService.getUnit(id);
