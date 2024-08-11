@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 @Repository
 public class UnitRepository implements DAO<ConcreteUnit>{
@@ -82,6 +82,9 @@ public class UnitRepository implements DAO<ConcreteUnit>{
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM units WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+       int rowsAffected = jdbcTemplate.update(sql, id);
+        if (rowsAffected > 0) {
+            log.info("Deleted unit with id: {}", id);
+        }
     }
 }
