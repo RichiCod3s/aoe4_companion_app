@@ -1,6 +1,7 @@
 package com.example.aoe4springapi.dao;
 
 import com.example.aoe4springapi.api.model.ConcreteUnit;
+import com.example.aoe4springapi.api.model.EnemyUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -20,6 +21,10 @@ public class UnitRepository implements DAO<ConcreteUnit>{
 
     private JdbcTemplate jdbcTemplate;
 
+    public UnitRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     RowMapper<ConcreteUnit> rowMapper = (rs, rowNum) ->
             new ConcreteUnit(
                     rs.getInt("id"),
@@ -30,9 +35,14 @@ public class UnitRepository implements DAO<ConcreteUnit>{
             );
 
 
-    public UnitRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    RowMapper<EnemyUnit> enemyRowMapper = (rs, rowNum) ->
+            new EnemyUnit(
+                    rs.getInt("id"),
+                    rs.getString("unit_name"),
+                    rs.getString("unit_type"),
+                    rs.getString("armour_type"),
+                    rs.getString("attack_type")
+            );
 
     @Override
     public List<ConcreteUnit> list() {
@@ -65,6 +75,27 @@ public class UnitRepository implements DAO<ConcreteUnit>{
         }
     }
 
+    public List<EnemyUnit> retrieveStrongAgainst(int unitId) {
+        String sql = "SELECT enemy_units.id, enemy_units.unit_name, enemy_units.unit_type, " +
+                "enemy_units.armour_type, enemy_units.attack_type " +
+                "FROM units " +
+                "JOIN strong_against ON units.id = strong_against.unit_id " +
+                "JOIN units AS enemy_units ON enemy_units.id = strong_against.enemy_id " +
+                "WHERE units.id = ?";
+        return jdbcTemplate.query(sql, enemyRowMapper, unitId);
+    }
+
+    public List<EnemyUnit> retrieveWeakAgainst(int unitId) {
+        String sql = "SELECT enemy_units.id, enemy_units.unit_name, enemy_units.unit_type, " +
+                "enemy_units.armour_type, enemy_units.attack_type " +
+                "FROM units " +
+                "JOIN weak_against ON units.id = weak_against.unit_id " +
+                "JOIN units AS enemy_units ON enemy_units.id = weak_against.enemy_id " +
+                "WHERE units.id = ?";
+        return jdbcTemplate.query(sql, enemyRowMapper, unitId);
+    }
+
+
     @Override
     public void update(ConcreteUnit concreteUnit, int id) {
         String sql = "UPDATE units SET unit_name = ?, unit_type = ?, armour_type = ?, attack_type = ? WHERE id = ?";
@@ -74,7 +105,7 @@ public class UnitRepository implements DAO<ConcreteUnit>{
                 concreteUnit.getArmourType(),
                 concreteUnit.getAttackType(),
                 id);
-        if(update ==1){
+        if(update == 1){
             log.info("Unit updated: {}", concreteUnit.getUnitName());
         }
     }
@@ -87,4 +118,5 @@ public class UnitRepository implements DAO<ConcreteUnit>{
             log.info("Deleted unit with id: {}", id);
         }
     }
+
 }

@@ -26,6 +26,7 @@ public class UnitsController {
             return (ConcreteUnit) unit.get();
         }
         return null;
+        //return unitsService.getUnit(id).orElse(null); - may be more clear
     }
 
     //list all units

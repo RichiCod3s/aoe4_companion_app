@@ -22,17 +22,28 @@ public class UnitsService {
         return unitRepository.list();
     }
 
-    public Optional<ConcreteUnit> getUnit(int id) {
-       return unitRepository.get(id);
-    }
+        public Optional<ConcreteUnit> getUnit(int id) {
+            Optional<ConcreteUnit> unit = unitRepository.get(id);
+            if (unit.isPresent()) {
+                ConcreteUnit concreteUnit = unit.get();
+                // get strength and weakness lists
+                concreteUnit.getStrongAgainst().addAll(unitRepository.retrieveStrongAgainst(id));
+                concreteUnit.getWeakAgainst().addAll(unitRepository.retrieveWeakAgainst(id));
+            }
+            return unit;
+        }
+
 
     public void createUnit(ConcreteUnit unit) {
+
         unitRepository.create(unit);
     }
 
     public void updateUnit(ConcreteUnit unit, int id) {
+
         unitRepository.update(unit, id);
     }
+
     public void deleteUnit(int id) {
         unitRepository.delete(id);
     }

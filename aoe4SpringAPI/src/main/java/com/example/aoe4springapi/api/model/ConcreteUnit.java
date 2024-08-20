@@ -27,10 +27,12 @@ public  class ConcreteUnit extends EnemyUnit {
         return strongAgainst;
     }
 
+
     // not sure if we need this or not // to research database
     public void setStrongAgainst(ArrayList<EnemyUnit> strongAgainst) {
         this.strongAgainst = strongAgainst;
     }
+
     public ArrayList<EnemyUnit> getWeakAgainst() {
         return weakAgainst;
     }
